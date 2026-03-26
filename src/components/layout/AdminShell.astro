@@ -1,0 +1,43 @@
+---
+/**
+ * AdminShell — main layout wrapper for admin pages.
+ *
+ * Usage:
+ *   <AdminShell activeSection="posts" title="Articles">
+ *     <slot />
+ *   </AdminShell>
+ *
+ * Pass nav sections via the `sections` prop or override AdminNav entirely.
+ */
+import Toast from '@/components/feedback/Toast';
+
+interface Props {
+  activeSection?: string;
+  title?: string;
+}
+const { activeSection = '', title = 'Admin' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} — Admin</title>
+    <link rel="stylesheet" href="/src/styles/admin.css" />
+  </head>
+  <body class="bg-admin-bg">
+    <!-- Sidebar rendered by each page (so nav items can be project-specific) -->
+    <slot name="sidebar" />
+
+    <!-- Main content -->
+    <main class="ml-64 min-h-screen">
+      <div class="p-6 lg:p-8">
+        <slot />
+      </div>
+    </main>
+
+    <!-- Global toast container -->
+    <Toast client:load />
+  </body>
+</html>
